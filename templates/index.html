@@ -1,0 +1,129 @@
+<html>
+<head>
+    <title>Text to speech - K30</title>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="title">
+        <h1> Text to speech </h1>
+        <h2> Phạm Quốc Huy - 19C11027</h2>
+    </div>
+    <div class='main'>
+        <div class="container">
+            <form action="{{ url_for('generate') }}" method="post" class="form">
+                <textarea id="textInput" rows="5" cols="55" name='text' class="text-area" placeholder="Type text here"></textarea>
+                <div class="form-control">
+                    {% for input in input_fields %}
+                        <div>
+                            <input type="checkbox" id="{{ input['id'] }}" name="{{ input['id'] }}" value="{{ input['id'] }}">
+                            <label for="{{ input['id'] }}">{{ input['label'] }}</label>
+                        </div>
+                    {% endfor %}
+                    <div class="form-action">
+                        <button id='btnGenerate' type="submit" class="btn-submit">Generate Audio</button>
+                    </div>
+                </div>
+            </form>
+    
+            {% if text %}
+            <div class='audio'>
+                <div>
+                    <textarea id="textOutput" rows="5" cols="55" name='text' class="text-area text-review" readonly> {{ text }}</textarea>
+                    {% for item in audio %}
+                        <div class="audio-item">
+                            <label for='pretrainAudio'>{{ item['label'] }}</label>
+                            <audio controls id='pretrainAudio'>
+                                <source src="{{ item['src'] }}" type="audio/wav">
+                            </audio>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    
+    </div>
+
+    <style>
+        .title {
+            text-align: center;
+            color: #8d6e63;
+            background: #ECECF0;
+            padding: 16px;
+            margin: 16px;
+        }
+
+        .container {
+            margin: 16px;
+            padding: 16px;
+            display: flex;  
+            align-items: stretch;
+            justify-content: center;
+            max-height: 80%;
+            background: #ECECF0;
+        }
+        .form {
+            margin: 8px;
+            padding: 12px;
+            background-color: #F7F7F7;
+            border-radius: 4px;
+        }
+        .text-area {
+            margin: 8px;
+            box-sizing: border-box;
+            border: 1px solid #F1F3F4;
+            border-radius: 4px;
+            padding: 16px;
+        }
+        .form .form-control {
+            margin: 8px;
+            padding: 8px;
+            text-align: left;
+            font-size: 16px;
+            line-height: 2;
+            border-radius: 4px;
+            border: 1px solid snow;
+        }
+        .form .form-action {
+            border-top: 2px solid #fefefe;
+        }
+
+        .form .form-control .btn-submit {
+            cursor: pointer;
+            margin-top: 32px;
+            padding: 4px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            border: none;
+            color: #fefefe;
+            background: #1678F9;
+        }
+
+        .audio {
+            padding: 12px;
+            margin: 8px;
+            background-color: #F7F7F7;
+            border-radius: 4px;
+            border: 1px solid snow;
+        }
+        .audio .text-review {
+            font-weight: bold;
+            opacity: 0.6;
+        }
+        .audio .audio-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 16px 8px;
+        }
+        .audio .audio-item label {
+            margin-right: 16px;
+        }
+        .audio .audio-item audio {
+            max-height: 24px;
+        }
+    </style>
+</body>
+</html>
